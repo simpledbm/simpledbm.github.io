@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SimpleDBM by simpledbm</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>SimpleDBM</h1>
+        <p>SimpleDBM is an Open Source Transactional Database Engine written in Java</p>
+        <p class="view"><a href="https://github.com/simpledbm">View the Project on GitHub <small>simpledbm</small></a></p>
+        <ul>
+          <li class="single"><a href="https://github.com/simpledbm/simpledbm.github.io">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>SimpleDBM is an Open Source Transactional Database Engine in Java. It has
+a very small footprint and can be embedded in the address space of an
+application. It provides a simple programming API, which can be learned
+very quickly. A simple network API is available for remote access.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<p>SimpleDBM has the following features:</p>
+
+<ol>
+<li>
+<strong>Transactional</strong> - SimpleDBM fully supports ACID transactions. SimpleDBM uses a STEAL/NO-FORCE buffer management strategy for transactions.</li>
+<li>
+<strong>Multi-threaded</strong> - SimpleDBM is multi-threaded and supports concurrent reads and writes of data.</li>
+<li>
+<strong>Write Ahead Log</strong> - SimpleDBM uses a write ahead log to ensure transaction recovery in the event of system crashes.</li>
+<li>
+<strong>Lock based concurrency</strong> - SimpleDBM uses shared, update and exclusive row locks to manage concurrency.</li>
+<li>
+<strong>Multiple Isolation Levels</strong> - SimpleDBM supports read-committed, repeatable-read, and serializable isolation levels.</li>
+<li>
+<strong>B-Tree Indexes</strong> - SimpleDBM implements B-plus Tree indexes, that fully support concurrent reads, inserts and deletes. SimpleDBM B-Trees continually re-balance themselves, and do not suffer from fragmentation.</li>
+<li>
+<strong>Tables</strong> - SimpleDBM supports tables, but for maximum flexibility, treats table rows as blobs of data. Table rows can have any internal structure as you like, and can span multiple disk pages. Standard table rows with multiple columns are supported via add-on modules.</li>
+<li>
+<strong>Latches and Locks</strong> - SimpleDBM uses latches for internal consistency, and locks for concurrency. Latches are more efficient locking mechanisms that do not suffer from deadlocks.</li>
+<li>
+<strong>Deadlock detection</strong> - SimpleDBM has support for deadlock detection. A background thread periodically checks the lock table for deadlocks and aborts transactions to resolve deadlocks.</li>
+<li>
+<strong>Network API</strong> - From release 1.0.18 a network client server implementation is included that allows SimpleDBM servers to run standalone and remote clients to connect via TCP/IP. Only Java bindings available right now.</li>
+</ol>
+
+<h2>
+<a id="non-features" class="anchor" href="#non-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non Features</h2>
+
+<ol>
+<li>SimpleDBM does not suport SQL.</li>
+<li>There is no support for distributed transactions (XA) yet.</li>
+</ol>
+
+<h2>
+<a id="status" class="anchor" href="#status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status</h2>
+
+<p>SimpleDBM is available via Maven Central. The latest release is 1.0.23. If you discover bugs please report as I will do my best to fix bugs. Enhancements are currently on hold due to lack of time.</p>
+
+<h2>
+<a id="news" class="anchor" href="#news" aria-hidden="true"><span class="octicon octicon-link"></span></a>News</h2>
+
+<ul>
+<li>1 Aug 2014 - SimpleDBM 1.0.23 uploaded to maven central. From this release the primary license is Apache V2.0 - but GPL and LGPL continue to be options.</li>
+<li>22 May 2013 - SimpleDBM 1.0.22 uploaded to maven central</li>
+<li>3 June 2012 - SimpleDBM 1.0.19-ALPHA released. This is a bug fix release.</li>
+<li>19 April 2010 - SimpleDBM 1.0.18-ALPHA released. This contains a first implementation of the network client server.</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>SimpleDBM license has been changed to Apache License 2.0 from 1.0.23 onwards.</p>
+
+<h1>
+<a id="getting-started-with-simpledbm" class="anchor" href="#getting-started-with-simpledbm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started with SimpleDBM</h1>
+
+<p>To start developing code with SimpleDBM, you need to include following maven dependencies:</p>
+
+<h2>
+<a id="embedded-database" class="anchor" href="#embedded-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Embedded Database</h2>
+
+<p>This option is where you want the database engine to be inside your application, deployed as part of the same JVM.</p>
+
+<pre><code>        &lt;dependency&gt;
+            &lt;groupId&gt;org.simpledbm&lt;/groupId&gt;
+            &lt;artifactId&gt;simpledbm-common&lt;/artifactId&gt;
+            &lt;version&gt;1.0.23&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.simpledbm&lt;/groupId&gt;
+            &lt;artifactId&gt;simpledbm-rss&lt;/artifactId&gt;
+            &lt;version&gt;1.0.23&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.simpledbm&lt;/groupId&gt;
+            &lt;artifactId&gt;simpledbm-typesystem&lt;/artifactId&gt;
+            &lt;version&gt;1.0.23&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.simpledbm&lt;/groupId&gt;
+            &lt;artifactId&gt;simpledbm-database&lt;/artifactId&gt;
+            &lt;version&gt;1.0.23&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<p>See the Database API documentation below.</p>
+
+<h2>
+<a id="network-server" class="anchor" href="#network-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network Server</h2>
+
+<p>The Network Server allows a client / server deployment.
+Instructions to follow...</p>
+
+<h1>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<p>For documentation, I recommend you start with:</p>
+
+<ul>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/overview.html">SimpleDBM Overview</a> - provides an overview of SimpleDBM</li>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/network-api.html">SimpleDBM Network API</a> - describes the Network API for client/server implementation</li>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/database-api.html">SimpleDBM Database API</a> - describes the Database API for embedded use</li>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/typesystem.html">SimpleDBM TypeSystem</a> - useful if you want to know more about the type system</li>
+</ul>
+
+<p>For advanced stuff, read:</p>
+
+<ul>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/usermanual.html">SimpleDBM RSS User's Manual</a> - describes the low level API of RSS</li>
+<li>
+<a href="https://simpledbm.readthedocs.org/en/latest/developerguide.html">SimpleDBM Developer's Guide</a> - covers internals of RSS, the SimpleDBM database engine</li>
+<li>
+<a href="http://simpledbm.googlecode.com/files/btree-space-management-1.0.pdf">BTree Space Management (pdf)</a> - describes some implementation issues with BTree space management</li>
+</ul>
+
+<p>You can read the <a href="http://simpledbm.blogspot.com/">SimpleDBM Blog</a> and other papers available in the downloads section. If you are interested in development, you should also read the literature referred to in the <a href="https://github.com/dibyendumajumdar/simpledbm/wiki/Bibliography">Bibliography</a>.</p>
+
+<p>If you find bugs, please raise Issues. You can also post questions in the <a href="http://groups.google.com/group/simpledbm">discussion group</a>.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
